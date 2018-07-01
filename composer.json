@@ -1,0 +1,10 @@
+{
+	"name": "jabli/naam",
+	"description": "name declension utility",
+	"type": "library",
+	"autoload": {
+		"psr-4": {
+			"Naam\\": "src/"
+		}
+	}
+}
