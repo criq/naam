@@ -24,7 +24,7 @@ class Naam
 			}
 
 			$url = \Katu\Types\TUrl::make('http://hi.ondraplsek.cz', $data);
-			$res = \Katu\Cache\Url::get($url);
+			$res = \Katu\Cache\URL::get($url);
 
 			if (isset($res->success) && $res->success) {
 				return $res->results;
