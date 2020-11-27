@@ -7,7 +7,4 @@
 			"Naam\\": "src/"
 		}
 	},
-	"require": {
-		"jabli/katu": "dev-master"
-	}
 }
