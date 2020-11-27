@@ -2,17 +2,18 @@
 
 namespace Naam;
 
-class Naam {
-
-	public function __construct($type, $name, $gender = null) {
+class Naam
+{
+	public function __construct($type, $name, $gender = null)
+	{
 		$this->type = (string)(new \Katu\Types\TString((string)$type))->normalizeSpaces()->trim();
 		$this->name = (string)(new \Katu\Types\TString((string)$name))->normalizeSpaces()->trim();
 		$this->gender = (string)(new \Katu\Types\TString((string)$gender))->normalizeSpaces()->trim();
 	}
 
-	public function getRes($timeout = 2419200) {
-		return \Katu\Cache::get([__CLASS__, __FUNCTION__], $timeout, function($naam) {
-
+	public function getRes($timeout = 2419200)
+	{
+		return \Katu\Cache::get([__CLASS__, __FUNCTION__], $timeout, function ($naam) {
 			$data = [
 				'type' => $naam->type,
 				'name' => $naam->name,
@@ -30,19 +31,20 @@ class Naam {
 			}
 
 			return [];
-
 		}, $this);
 	}
 
-	public function getGenders() {
-		$genders = array_map(function($item) {
+	public function getGenders()
+	{
+		$genders = array_map(function ($item) {
 			return $item->gender;
 		}, $this->getRes());
 
 		return $genders;
 	}
 
-	static function getPrevalentGenderFromGenders($genders) {
+	public static function getPrevalentGenderFromGenders($genders)
+	{
 		$genderCounts = array_count_values($genders);
 		asort($genderCounts, \SORT_NATURAL);
 		$genderCounts = array_reverse($genderCounts);
@@ -58,17 +60,20 @@ class Naam {
 		return array_keys($genderCounts)[0];
 	}
 
-	public function getPrevalentGender() {
+	public function getPrevalentGender()
+	{
 		return static::getPrevalentGenderFromGenders($this->getGenders());
 	}
 
-	public function getVocativesByGender($gender) {
-		return array_values(array_filter($this->getRes(), function($item) use($gender) {
+	public function getVocativesByGender($gender)
+	{
+		return array_values(array_filter($this->getRes(), function ($item) use ($gender) {
 			return $item->gender == $gender;
 		}));
 	}
 
-	public function getVocativesRes() {
+	public function getVocativesRes()
+	{
 		$res = $this->getRes();
 		if (!$res) {
 			return false;
@@ -81,7 +86,8 @@ class Naam {
 		}
 	}
 
-	public function getVocative() {
+	public function getVocative()
+	{
 		$res = $this->getVocativesRes();
 		if (isset($res[0]->vocativ)) {
 			return $res[0]->vocativ;
@@ -89,5 +95,4 @@ class Naam {
 
 		return false;
 	}
-
 }
