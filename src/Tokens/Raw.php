@@ -17,29 +17,15 @@ class Raw extends \Naam\Token
 	{
 		$tokens = new \Naam\Tokens;
 
-		if (preg_match('/^(.*)(Ing\.\s*arch\.|Ph\.\s*D\.)(.*)$/ui', $this->getValue(), $match)) {
-			foreach (preg_split('/\s/', $match[1]) as $part) {
-				foreach ((new static($part))->getTokens() as $token) {
-					$tokens[] = $token;
-				}
-			}
-			$tokens[] = new Title($match[2]);
-			foreach (preg_split('/\s/', $match[3]) as $part) {
-				foreach ((new static($part))->getTokens() as $token) {
-					$tokens[] = $token;
-				}
-			}
-		} else {
-			$parts = preg_split('/\s/', $this->getValue());
-			if (count($parts) == 1) {
-				$tokens[] = Text::createFromRaw($parts[0]);
-			} elseif (count($parts) > 1) {
-				foreach ($parts as $part) {
-					foreach ((new static($part))->getTokens() as $token) {
-						$tokens[] = $token;
-					}
-				}
-			}
+		/**************************************************************************
+		 * Preserve multi-word prefixes, suffixes.
+		 */
+		$value = $this->getValue();
+		$value = preg_replace('/Ing\.?\s*arch\.?/ui', 'Ing._arch.', $value);
+		$value = preg_replace('/Ph. D./ui', 'PhD.', $value);
+
+		foreach (preg_split('/\s/', $value) as $part) {
+			$tokens[] = Text::createFromRaw($part);
 		}
 
 		$tokens = new \Naam\Tokens(array_values(array_filter($tokens->getArrayCopy(), 'trim')));

@@ -2,12 +2,10 @@
 
 namespace Naam;
 
-class FullName extends \ArrayObject
+class FullName extends Tokens
 {
 	public static function createFromString(string $value)
 	{
-		$token = new \Naam\Tokens\Raw($value);
-		// var_dump($token);
-		var_dump($token->getTokens());
+		return new static((new \Naam\Tokens\Raw($value))->getTokens());
 	}
 }

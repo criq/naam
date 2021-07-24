@@ -6,13 +6,12 @@ class Text extends \Naam\Token
 {
 	public static function createFromRaw(string $value)
 	{
-		$titles = [
+		$prefixes = [
 			'Bc\.?',
-			'DiS\.?',
 			'doc\.?',
 			'Ing\.?',
+			'Ing\.?[\s_]*arch\.?',
 			'JUDr\.?',
-			'MBA\.?',
 			'Mgr\.?',
 			'MVDr\.?',
 			'PhDr\.?',
@@ -21,10 +20,22 @@ class Text extends \Naam\Token
 			'RNDr\.?',
 		];
 
-		$titlesRegexp = implode('|', $titles);
+		$prefixesRegexp = implode('|', $prefixes);
 
-		if (preg_match("/^($titlesRegexp)$/ui", $value, $match)) {
-			return new Title($value);
+		if (preg_match("/^($prefixesRegexp)$/ui", $value, $match)) {
+			return new Prefix($value);
+		}
+
+		$suffixes = [
+			'DiS\.?',
+			'MBA\.?',
+			'Ph\.?[\s_]*D\.?',
+		];
+
+		$suffixesRegexp = implode('|', $suffixes);
+
+		if (preg_match("/^($suffixesRegexp)$/ui", $value, $match)) {
+			return new Suffix($value);
 		}
 
 		$generationals = [

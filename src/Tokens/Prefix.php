@@ -2,6 +2,6 @@
 
 namespace Naam\Tokens;
 
-class Title extends \Naam\Token
+class Prefix extends \Naam\Token
 {
 }
