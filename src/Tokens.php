@@ -22,7 +22,7 @@ class Tokens extends \ArrayObject
 			$tokens[] = Tokens\Text::createFromRaw($part);
 		}
 
-		$tokens = new \Naam\Tokens(array_values(array_filter($tokens, 'trim')));
+		$tokens = new static(array_values(array_filter($tokens, 'trim')));
 
 		return $tokens;
 	}
