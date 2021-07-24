@@ -20,11 +20,4 @@ class Token
 	{
 		return trim($this->value);
 	}
-
-	public function getTokens() : Tokens
-	{
-		return new Tokens([
-			$this,
-		]);
-	}
 }
