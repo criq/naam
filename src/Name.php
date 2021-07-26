@@ -93,8 +93,9 @@ abstract class Name
 			}
 
 			$class = TClass::createFromStorableName(array_keys($genderCounts)[0]);
+			$className = $class->getName();
 
-			return new ($class->getName());
+			return new $className;
 		} catch (\Throwable $e) {
 			return null;
 		}
