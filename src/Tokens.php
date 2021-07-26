@@ -2,9 +2,16 @@
 
 namespace Naam;
 
+use Katu\Types\TClass;
+
 class Tokens extends \ArrayObject
 {
-	public static function createFromString(string $value) : Tokens
+	public function __toString() : string
+	{
+		return implode(' ', $this->getArrayCopy());
+	}
+
+	public static function createFromString(string $value) : FullName
 	{
 		$value = preg_replace('/,/', '', $value);
 		$value = preg_replace('/\./', '. ', $value);
@@ -25,5 +32,12 @@ class Tokens extends \ArrayObject
 		$tokens = new static(array_values(array_filter($tokens, 'trim')));
 
 		return $tokens;
+	}
+
+	public function filterByClass(TClass $class) : Tokens
+	{
+		return new Tokens(array_values(array_filter($this->getArrayCopy(), function ($token) use ($class) {
+			return new TClass($token) == $class;
+		})));
 	}
 }

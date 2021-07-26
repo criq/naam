@@ -17,6 +17,11 @@ abstract class Name
 		$this->gender = $gender;
 	}
 
+	public function __toString() : string
+	{
+		return (string)$this->getName();
+	}
+
 	public function getName() : string
 	{
 		return $this->name;
@@ -125,5 +130,14 @@ abstract class Name
 		} catch (\Throwable $e) {
 			return null;
 		}
+	}
+
+	public function getResponseArray() : array
+	{
+		return [
+			'nominative' => $this->getName(),
+			'vocative' => $this->getVocative(),
+			'gender' => $this->getPrevalentGender()->getHiValue(),
+		];
 	}
 }
