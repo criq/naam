@@ -23,7 +23,7 @@ class Tokens extends \ArrayObject
 		 * Preserve multi-word prefixes, suffixes.
 		 */
 		$value = preg_replace('/Ing\.?\s*arch\.?/ui', 'Ing._arch.', $value);
-		$value = preg_replace('/Ph. D./ui', 'PhD.', $value);
+		$value = preg_replace('/Ph\s*\.?D\.?/ui', 'PhD.', $value);
 
 		foreach (preg_split('/\s/', $value) as $part) {
 			$tokens[] = Tokens\Text::createFromRaw($part);
