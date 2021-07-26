@@ -11,7 +11,7 @@ class FullName extends Tokens
 		return $this->getName();
 	}
 
-	public function getCompleteName() : ?string
+	public function getAffixedName() : ?string
 	{
 		return trim(implode(' ', $this->getArrayCopy())) ?: null;
 	}
@@ -62,7 +62,7 @@ class FullName extends Tokens
 
 		return [
 			'gender' => $genderValue,
-			'affixedName' => $this->getCompleteName(),
+			'affixedName' => $this->getAffixedName(),
 			'fullName' => $this->getName(),
 			'firstNames' => array_map(function ($i) {
 				return $i->getResponseArray();
