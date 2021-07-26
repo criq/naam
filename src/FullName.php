@@ -57,8 +57,8 @@ class FullName extends Tokens
 
 		return [
 			'gender' => $genderValue,
-			'completeName' => $this->getCompleteName(),
-			'name' => $this->getName(),
+			'affixedName' => $this->getCompleteName(),
+			'fullName' => $this->getName(),
 			'firstNames' => array_map(function ($i) {
 				return $i->getResponseArray();
 			}, $this->getFirstNames()),
