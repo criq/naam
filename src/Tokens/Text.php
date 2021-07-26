@@ -13,6 +13,7 @@ class Text extends \Naam\Token
 			'Ing\.?',
 			'Ing\.?[\s_]*arch\.?',
 			'JUDr\.?',
+			'MgA\.?',
 			'Mgr\.?',
 			'MUDr\.?',
 			'MVDr\.?',
