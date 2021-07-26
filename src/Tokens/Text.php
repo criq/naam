@@ -14,6 +14,7 @@ class Text extends \Naam\Token
 			'Ing\.?[\s_]*arch\.?',
 			'JUDr\.?',
 			'Mgr\.?',
+			'MUDr\.?',
 			'MVDr\.?',
 			'PaedDr\.?',
 			'PharmDr\.?',
