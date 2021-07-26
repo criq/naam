@@ -19,6 +19,7 @@ class Text extends \Naam\Token
 			'MVDr\.?',
 			'PaedDr\.?',
 			'PharmDr\.?',
+			'PhD\.r\.',
 			'PhDr\.?',
 			'pplk\.?',
 			'prof\.?',
