@@ -10,6 +10,7 @@ class Text extends \Naam\Token
 			'Bc\.?',
 			'doc\.?',
 			'Dr\.?',
+			'et',
 			'Ing\.?',
 			'Ing\.?[\s_]*arch\.?',
 			'JUDr\.?',
