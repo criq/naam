@@ -6,14 +6,14 @@ use Katu\Types\TClass;
 
 class FullName extends Tokens
 {
-	public function getCompleteName() : string
+	public function getCompleteName() : ?string
 	{
-		return implode(' ', $this->getArrayCopy());
+		return trim(implode(' ', $this->getArrayCopy())) ?: null;
 	}
 
-	public function getName() : string
+	public function getName() : ?string
 	{
-		return implode(' ', array_merge($this->getFirstNames(), $this->getLastNames()));
+		return trim(implode(' ', array_merge($this->getFirstNames(), $this->getLastNames()))) ?: null;
 	}
 
 	public function getFirstNames() : array
@@ -49,8 +49,14 @@ class FullName extends Tokens
 
 	public function getResponseArray() : array
 	{
+		try {
+			$genderValue = $this->getPrevalentGender()->getHiValue();
+		} catch (\Throwable $e) {
+			$genderValue = null;
+		}
+
 		return [
-			'gender' => $this->getPrevalentGender()->getHiValue(),
+			'gender' => $genderValue,
 			'completeName' => $this->getCompleteName(),
 			'name' => $this->getName(),
 			'firstNames' => array_map(function ($i) {
