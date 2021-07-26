@@ -31,6 +31,7 @@ class Text extends \Naam\Token
 		}
 
 		$suffixes = [
+			'CSc\.?',
 			'DiS\.?',
 			'MBA\.?',
 			'Ph\.?[\s_]*D\.?',
