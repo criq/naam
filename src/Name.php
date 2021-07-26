@@ -135,10 +135,16 @@ abstract class Name
 
 	public function getResponseArray() : array
 	{
+		try {
+			$genderValue = $this->getPrevalentGender()->getHiValue();
+		} catch (\Throwable $e) {
+			$genderValue = null;
+		}
+
 		return [
 			'nominative' => $this->getName(),
 			'vocative' => $this->getVocative(),
-			'gender' => $this->getPrevalentGender()->getHiValue(),
+			'gender' => $genderValue,
 		];
 	}
 }
