@@ -19,6 +19,7 @@ class Text extends \Naam\Token
 			'pplk\.?',
 			'prof\.?',
 			'RNDr\.?',
+			'ThMgr\.?',
 		];
 
 		$prefixesRegexp = implode('|', $prefixes);
