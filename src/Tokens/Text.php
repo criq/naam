@@ -23,6 +23,7 @@ class Text extends \Naam\Token
 			'pplk\.?',
 			'prof\.?',
 			'RNDr\.?',
+			'RSDr\.?',
 			'ThMgr\.?',
 		];
 
