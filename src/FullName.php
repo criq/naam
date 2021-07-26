@@ -6,6 +6,11 @@ use Katu\Types\TClass;
 
 class FullName extends Tokens
 {
+	public function __toString() : string
+	{
+		return $this->getName();
+	}
+
 	public function getCompleteName() : ?string
 	{
 		return trim(implode(' ', $this->getArrayCopy())) ?: null;
