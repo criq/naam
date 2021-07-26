@@ -54,7 +54,7 @@ abstract class Name
 	public function getHiResponse($timeout = '1 month') : ?array
 	{
 		$url = \Katu\Types\TUrl::make('http://hi.ondraplsek.cz', $this->getHiParams());
-		$res = \Katu\Cache\Url::get($url, $timeout);
+		$res = \Katu\Cache\URL::get($url, $timeout);
 
 		if ($res->success ?? null) {
 			return $res->results;
