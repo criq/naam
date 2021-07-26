@@ -15,8 +15,9 @@ abstract class Gender
 	{
 		try {
 			$class = static::getHiMap()[$value];
+			$className = $class->getName();
 
-			return new ($class->getName());
+			return new $className;
 		} catch (\Throwable $e) {
 			return null;
 		}
@@ -26,8 +27,9 @@ abstract class Gender
 	{
 		try {
 			$class = static::getHiMap()[$value];
+			$className = $class->getName();
 
-			return new ($class->getName());
+			return new $className;
 		} catch (\Throwable $e) {
 			return null;
 		}
