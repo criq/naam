@@ -9,6 +9,7 @@ class Text extends \Naam\Token
 		$prefixes = [
 			'Bc\.?',
 			'doc\.?',
+			'Dr\.?',
 			'Ing\.?',
 			'Ing\.?[\s_]*arch\.?',
 			'JUDr\.?',
