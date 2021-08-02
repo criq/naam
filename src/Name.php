@@ -2,6 +2,7 @@
 
 namespace Naam;
 
+use Katu\Tools\DateTime\Timeout;
 use Katu\Types\TClass;
 
 abstract class Name
@@ -51,8 +52,12 @@ abstract class Name
 		return $params;
 	}
 
-	public function getHiResponse($timeout = '1 month') : ?array
+	public function getHiResponse(?Timeout $timeout = null) : ?array
 	{
+		if (!$timeout) {
+			$timeout = new Timeout('1 month');
+		}
+
 		$url = \Katu\Types\TUrl::make('http://hi.ondraplsek.cz', $this->getHiParams());
 		$res = \Katu\Cache\URL::get($url, $timeout);
 
