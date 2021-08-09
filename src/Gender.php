@@ -8,7 +8,7 @@ abstract class Gender
 {
 	public function __toString()
 	{
-		return (string)(new TClass($this))->getStorableName();
+		return (string)(new TClass($this))->getPortableName();
 	}
 
 	public static function createFromCode($value) : ?Gender

@@ -97,7 +97,7 @@ abstract class Name
 				return null;
 			}
 
-			$class = TClass::createFromStorableName(array_keys($genderCounts)[0]);
+			$class = TClass::createFromPortableName(array_keys($genderCounts)[0]);
 			$className = $class->getName();
 
 			return new $className;
