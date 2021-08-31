@@ -8,6 +8,6 @@
 		}
 	},
 	"require": {
-		"jabli/katu": "v2.x-dev"
+		"criq/katu": "v2.x-dev"
 	}
 }
