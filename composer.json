@@ -8,6 +8,6 @@
 		}
 	},
 	"require": {
-		"criq/katu": "v2.x-dev"
+		"criq/katu": "^3"
 	}
 }
