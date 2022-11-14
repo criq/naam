@@ -2,7 +2,7 @@
 
 namespace Naam;
 
-use Katu\Tools\DateTime\Timeout;
+use Katu\Tools\Calendar\Timeout;
 use Katu\Types\TClass;
 
 abstract class Name
@@ -41,12 +41,12 @@ abstract class Name
 	public function getHiParams() : array
 	{
 		$params = [
-			'type' => $this->getHiType(),
-			'name' => $this->getName(),
+			"type" => $this->getHiType(),
+			"name" => $this->getName(),
 		];
 
 		if ($this->getGender()) {
-			$params['gender'] = $this->getGender()->getHiValue();
+			$params["gender"] = $this->getGender()->getHiValue();
 		}
 
 		return $params;
@@ -55,10 +55,10 @@ abstract class Name
 	public function getHiResponse(?Timeout $timeout = null) : ?array
 	{
 		if (!$timeout) {
-			$timeout = new Timeout('1 month');
+			$timeout = new Timeout("1 month");
 		}
 
-		$url = \Katu\Types\TUrl::make('http://hi.ondraplsek.cz', $this->getHiParams());
+		$url = \Katu\Types\TUrl::make("http://hi.ondraplsek.cz", $this->getHiParams());
 		$res = \Katu\Cache\URL::get($url, $timeout);
 
 		if ($res->success ?? null) {
@@ -147,9 +147,9 @@ abstract class Name
 		}
 
 		return [
-			'nominative' => $this->getName(),
-			'vocative' => $this->getVocative(),
-			'gender' => $genderValue,
+			"nominative" => $this->getName(),
+			"vocative" => $this->getVocative(),
+			"gender" => $genderValue,
 		];
 	}
 }

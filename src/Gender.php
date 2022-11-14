@@ -38,8 +38,8 @@ abstract class Gender
 	public static function getHiMap() : array
 	{
 		return [
-			'male' => new TClass("Naam\Genders\Male"),
-			'female' => new TClass("Naam\Genders\Female"),
+			"male" => new TClass("Naam\Genders\Male"),
+			"female" => new TClass("Naam\Genders\Female"),
 		];
 	}
 

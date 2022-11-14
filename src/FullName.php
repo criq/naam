@@ -13,12 +13,12 @@ class FullName extends Tokens
 
 	public function getAffixedName() : ?string
 	{
-		return trim(implode(' ', $this->getArrayCopy())) ?: null;
+		return trim(implode(" ", $this->getArrayCopy())) ?: null;
 	}
 
 	public function getName() : ?string
 	{
-		return trim(implode(' ', array_merge($this->getFirstNames(), $this->getLastNames()))) ?: null;
+		return trim(implode(" ", array_merge($this->getFirstNames(), $this->getLastNames()))) ?: null;
 	}
 
 	public function getFirstNames() : array
@@ -61,13 +61,13 @@ class FullName extends Tokens
 		}
 
 		return [
-			'gender' => $genderValue,
-			'affixedName' => $this->getAffixedName(),
-			'fullName' => $this->getName(),
-			'firstNames' => array_map(function ($i) {
+			"gender" => $genderValue,
+			"affixedName" => $this->getAffixedName(),
+			"fullName" => $this->getName(),
+			"firstNames" => array_map(function ($i) {
 				return $i->getResponseArray();
 			}, $this->getFirstNames()),
-			'lastNames' => array_map(function ($i) {
+			"lastNames" => array_map(function ($i) {
 				return $i->getResponseArray();
 			}, $this->getLastNames()),
 		];
