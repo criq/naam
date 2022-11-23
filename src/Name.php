@@ -3,9 +3,12 @@
 namespace Naam;
 
 use Katu\Tools\Calendar\Timeout;
+use Katu\Tools\Rest\RestResponse;
+use Katu\Tools\Rest\RestResponseInterface;
 use Katu\Types\TClass;
+use Psr\Http\Message\ServerRequestInterface;
 
-abstract class Name
+abstract class Name implements RestResponseInterface
 {
 	const HI_TYPE = null;
 
@@ -138,7 +141,7 @@ abstract class Name
 		}
 	}
 
-	public function getResponseArray() : array
+	public function getRestResponse(?ServerRequestInterface $request = null): RestResponse
 	{
 		try {
 			$genderValue = $this->getPrevalentGender()->getHiValue();
@@ -146,10 +149,10 @@ abstract class Name
 			$genderValue = null;
 		}
 
-		return [
+		return new RestResponse([
 			"nominative" => $this->getName(),
 			"vocative" => $this->getVocative(),
 			"gender" => $genderValue,
-		];
+		]);
 	}
 }
