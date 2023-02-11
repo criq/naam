@@ -2,6 +2,7 @@
 
 namespace Naam;
 
+use Katu\Tools\Options\OptionCollection;
 use Katu\Tools\Rest\RestResponse;
 use Katu\Tools\Rest\RestResponseInterface;
 use Katu\Types\TClass;
@@ -55,7 +56,7 @@ class FullName extends Tokens implements RestResponseInterface
 		return Name::getPrevalentGenderFromGenders($this->getHiGenders());
 	}
 
-	public function getRestResponse(?ServerRequestInterface $request = null): RestResponse
+	public function getRestResponse(?ServerRequestInterface $request = null, ?OptionCollection $options = null): RestResponse
 	{
 		try {
 			$genderValue = $this->getPrevalentGender()->getHiValue();
@@ -67,11 +68,11 @@ class FullName extends Tokens implements RestResponseInterface
 			"gender" => $genderValue,
 			"affixedName" => $this->getAffixedName(),
 			"fullName" => $this->getName(),
-			"firstNames" => array_map(function ($i) {
-				return $i->getRestResponse();
+			"firstNames" => array_map(function ($i) use ($request, $options) {
+				return $i->getRestResponse($request, $options);
 			}, $this->getFirstNames()),
-			"lastNames" => array_map(function ($i) {
-				return $i->getRestResponse();
+			"lastNames" => array_map(function ($i) use ($request, $options) {
+				return $i->getRestResponse($request, $options);
 			}, $this->getLastNames()),
 		]);
 	}

@@ -3,6 +3,7 @@
 namespace Naam;
 
 use Katu\Tools\Calendar\Timeout;
+use Katu\Tools\Options\OptionCollection;
 use Katu\Tools\Rest\RestResponse;
 use Katu\Tools\Rest\RestResponseInterface;
 use Katu\Types\TClass;
@@ -141,7 +142,7 @@ abstract class Name implements RestResponseInterface
 		}
 	}
 
-	public function getRestResponse(?ServerRequestInterface $request = null): RestResponse
+	public function getRestResponse(?ServerRequestInterface $request = null, ?OptionCollection $options = null): RestResponse
 	{
 		try {
 			$genderValue = $this->getPrevalentGender()->getHiValue();
