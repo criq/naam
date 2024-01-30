@@ -18,7 +18,7 @@ abstract class Name implements RestResponseInterface
 
 	public function __construct(string $name, ?Gender $gender = null)
 	{
-		$this->name = (string)(new \Katu\Types\TString((string)$name))->normalizeSpaces()->trim();
+		$this->name = (string)(new \Katu\Types\TString((string)$name))->getWithNormalizedSpaces()->getTrimmed();
 		$this->gender = $gender;
 	}
 
