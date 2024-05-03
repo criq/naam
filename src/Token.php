@@ -30,7 +30,7 @@ abstract class Token
 
 	public static function createFromString(int $index, string $value): Token
 	{
-		$prefixesRegexp = implode("|", static::getPrefixes());;
+		$prefixesRegexp = implode("|", static::getPrefixes());
 		if (preg_match("/^($prefixesRegexp)$/ui", $value, $match)) {
 			return new PrefixToken($index, $value);
 		}
