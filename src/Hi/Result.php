@@ -16,8 +16,8 @@ class Result
 	{
 		$this->setGender($gender);
 		$this->setKind($kind);
-		$this->nominative = $nominative;
-		$this->vocative = $vocative;
+		$this->setNominative($nominative);
+		$this->setVocative($vocative);
 	}
 
 	public function setKind(?Kind $kind): Result
