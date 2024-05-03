@@ -2,158 +2,91 @@
 
 namespace Naam;
 
-use Katu\Tools\Calendar\Timeout;
-use Katu\Tools\Options\OptionCollection;
-use Katu\Tools\Rest\RestResponse;
-use Katu\Tools\Rest\RestResponseInterface;
-use Katu\Types\TClass;
-use Psr\Http\Message\ServerRequestInterface;
+use Naam\Hi\Request;
+use Naam\Hi\Response;
 
-abstract class Name implements RestResponseInterface
+use function PHPUnit\Framework\returnValue;
+
+class Name
 {
-	const HI_TYPE = null;
-
-	protected $name;
 	protected $gender;
+	protected $index;
+	protected $kind;
+	protected $name;
 
-	public function __construct(string $name, ?Gender $gender = null)
+	public function __construct(int $index, string $name, ?Kind $kind = null, ?Gender $gender = null)
 	{
-		$this->name = (string)(new \Katu\Types\TString((string)$name))->getWithNormalizedSpaces()->getTrimmed();
-		$this->gender = $gender;
+		$this->setGender($gender);
+		$this->setIndex($index);
+		$this->setKind($kind);
+		$this->setName((string)(new \Katu\Types\TString((string)$name))->getWithNormalizedSpaces()->getTrimmed());
 	}
 
-	public function __toString() : string
+	public function __toString(): string
 	{
 		return (string)$this->getName();
 	}
 
-	public function getName() : string
+	public function setIndex(int $index): Name
+	{
+		$this->index = $index;
+
+		return $this;
+	}
+
+	public function setName(string $name): Name
+	{
+		$this->name = $name;
+
+		return $this;
+	}
+
+	public function getName(): string
 	{
 		return $this->name;
 	}
 
-	public function getGender() : ?Gender
+	public function setKind(?Kind $kind): Name
+	{
+		$this->kind = $kind;
+
+		return $this;
+	}
+
+	public function getKind(): ?Kind
+	{
+		return $this->kind;
+	}
+
+	public function setGender(?Gender $gender): Name
+	{
+		$this->gender = $gender;
+
+		return $this;
+	}
+
+	public function getGender(): ?Gender
 	{
 		return $this->gender;
 	}
 
-	public function getHiType() : string
+	public function getHiType(): ?string
 	{
-		return (string)static::HI_TYPE;
+		return $this->getKind() ? $this->getKind()->getHiType() : null;
 	}
 
-	public function getHiParams() : array
+	public function getHiGender(): ?string
 	{
-		$params = [
-			"type" => $this->getHiType(),
-			"name" => $this->getName(),
-		];
-
-		if ($this->getGender()) {
-			$params["gender"] = $this->getGender()->getHiValue();
-		}
-
-		return $params;
+		return $this->getGender() ? $this->getGender()->getHiGender() : null;
 	}
 
-	public function getHiResponse(?Timeout $timeout = null) : ?array
+	public function getHiResponse(): Response
 	{
-		if (!$timeout) {
-			$timeout = new Timeout("1 month");
-		}
-
-		$url = \Katu\Types\TUrl::make("http://hi.ondraplsek.cz", $this->getHiParams());
-		$res = \Katu\Cache\URL::get($url, $timeout);
-
-		if ($res->success ?? null) {
-			return $res->results;
-		}
-
-		return null;
+		return (new Request($this->getName(), $this->getHiType(), $this->getHiGender()))->getResponse();
 	}
 
-	public function getHiGenders() : array
+	public function getDeclension(): ?Declension
 	{
-		$genders = array_map(function ($item) {
-			return Gender::createFromHiValue($item->gender);
-		}, $this->getHiResponse());
-
-		return $genders;
-	}
-
-	public static function getPrevalentGenderFromGenders(array $genders) : ?Gender
-	{
-		try {
-			$genders = array_map(function ($i) {
-				return (string)$i;
-			}, $genders);
-
-			$genderCounts = array_count_values($genders);
-			asort($genderCounts, \SORT_NATURAL);
-			$genderCounts = array_reverse($genderCounts);
-
-			if (!array_sum($genderCounts)) {
-				return null;
-			}
-
-			$genderCountValues = array_values($genderCounts);
-			if (count($genderCountValues) == 2 && $genderCountValues[0] == $genderCountValues[1]) {
-				return null;
-			}
-
-			$class = TClass::createFromPortableName(array_keys($genderCounts)[0]);
-			$className = $class->getName();
-
-			return new $className;
-		} catch (\Throwable $e) {
-			return null;
-		}
-	}
-
-	public function getPrevalentGender() : ?Gender
-	{
-		return static::getPrevalentGenderFromGenders($this->getHiGenders());
-	}
-
-	public function getHiResultsByGender(Gender $gender) : array
-	{
-		return array_values(array_filter($this->getHiResponse(), function ($i) use ($gender) {
-			return $i->gender == $gender->getHiValue();
-		}));
-	}
-
-	public function getVocative() : ?string
-	{
-		try {
-			$res = $this->getHiResponse();
-			if (!$res) {
-				return null;
-			}
-
-			if ($this->getGender()) {
-				$genderResults = $this->getHiResultsByGender($this->getGender());
-			} else {
-				$genderResults = $this->getHiResultsByGender($this->getPrevalentGender());
-			}
-
-			return $genderResults[0]->vocativ;
-		} catch (\Throwable $e) {
-			return null;
-		}
-	}
-
-	public function getRestResponse(?ServerRequestInterface $request = null, ?OptionCollection $options = null): RestResponse
-	{
-		try {
-			$genderValue = $this->getPrevalentGender()->getHiValue();
-		} catch (\Throwable $e) {
-			$genderValue = null;
-		}
-
-		return new RestResponse([
-			"nominative" => $this->getName(),
-			"vocative" => $this->getVocative(),
-			"gender" => $genderValue,
-		]);
+		return $this->getHiResponse()->getDeclension();
 	}
 }
