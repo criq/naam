@@ -4,6 +4,7 @@ namespace Naam;
 
 use Naam\Hi\Request;
 use Naam\Hi\Response;
+use Naam\Hi\ResultCollection;
 
 use function PHPUnit\Framework\returnValue;
 
@@ -83,6 +84,11 @@ class Name
 	public function getHiResponse(): Response
 	{
 		return (new Request($this->getName(), $this->getHiType(), $this->getHiGender()))->getResponse();
+	}
+
+	public function getHiResults(): ResultCollection
+	{
+		return $this->getHiResponse()->getResults()->sortByNominativeMatch($this->getName());
 	}
 
 	public function getDeclension(): ?Declension
