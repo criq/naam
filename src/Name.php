@@ -62,7 +62,7 @@ abstract class Name implements RestResponseInterface
 			$timeout = new Timeout("1 month");
 		}
 
-		$url = \Katu\Types\TUrl::make("http://hi.ondraplsek.cz", $this->getHiParams());
+		$url = \Katu\Types\TURL::make("http://hi.ondraplsek.cz", $this->getHiParams());
 		$res = \Katu\Cache\URL::get($url, $timeout);
 
 		if ($res->success ?? null) {
