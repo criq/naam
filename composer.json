@@ -1,6 +1,7 @@
 {
 	"name": "criq/naam",
 	"description": "name declension utility",
+	"version": "8.20260818.2",
 	"type": "library",
 	"autoload": {
 		"psr-4": {

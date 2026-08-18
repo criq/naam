@@ -6,8 +6,6 @@ use Naam\Hi\Request;
 use Naam\Hi\Response;
 use Naam\Hi\ResultCollection;
 
-use function PHPUnit\Framework\returnValue;
-
 class Name
 {
 	protected $gender;
